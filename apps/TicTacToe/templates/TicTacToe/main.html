@@ -19,8 +19,10 @@
       </script>
 
       <script type="text/javascript">
-	$(document).ready(function() { 
-
+	$(document).ready(function() {
+	    $('li[id^="player"]').click(function(e) {
+		toggle_player(e.target.id);
+	    })
 	});
       </script>
       {% endblock %}
@@ -40,13 +42,13 @@
 	<article id="main_article" class="module width_full">
 	  <section id="main_forms" class="center main_forms">
 	    <ul class="main_tabs">
-	      <li class="main_tab">New Game</li>
-	      <li class="main_tab">
+	      <li class="main_tab" id="new_game">New Game</li>
+	      <li class="main_tab" id="player_x">
 		Player X
 		<img src="{{STATIC_URL}}TicTacToe/images/person.png"
 		     alt="human" id="player_x_img" />
 	      </li>
-	      <li class="main_tab">
+	      <li class="main_tab" id="player_o">
 	      Player O 
 	      <img src="{{STATIC_URL}}TicTacToe/images/computer.png"
 		     alt="computer" id="player_o_img" />
