@@ -10,12 +10,18 @@ class Moves:
 
 
     def __init__(self):
+        # A flag just to make sure we know all the moves are loaded
+        # in advance of asking
+        self.loaded = False
+
         # Initialize with the empty board
         self.boards = {'000000000': Board('000000000')}
 
         # Recursively make all the boards
         self._add_next_move(0, {x: True for x in range(9)})
         print "Loaded {0} different boards".format(len(self.boards))
+
+        self.loaded = True
 
     def get_next_board(self, board_id):
         """
@@ -119,8 +125,10 @@ class Moves:
             print "OLD BOARD:\n", self.boards[old_id]
 class Board:
     """
-The board is an integer, with the position of each digit corresponding to
-the position the string. See below for the example.
+Fields:
+
+   board_id - The board is a strinification of an integer, with the position 
+      of each digit corresponding to the position the string. See below for the example.
 
  0 | 1 | 2
 -----------
@@ -141,7 +149,7 @@ example: 102210120
  X | O |   
 
 
-Fields:
+  
   game_over_man - An internal flag that says if no mistakes are made the stated
      player will win.
 
