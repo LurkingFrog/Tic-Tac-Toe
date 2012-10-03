@@ -1,10 +1,90 @@
 <html>
   <head>
-    <title>"Global Thermonuclear War"</title>
-  
+    {% block title %}
+      <title>"Global Thermonuclear War"</title>
+    {% endblock %}
+
+    {% block css %}
+      <link rel="stylesheet" href="{{STATIC_URL}}TicTacToe/css/layout.css" 
+	    type="text/css" media="screen" />
+    {% endblock %}
+
+    {% block javascript %}
+      <script type="text/javascript"
+	      src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js">
+      </script>
+
+      <script type="text/javascript" 
+	      src="{{STATIC_URL}}TicTacToe/js/main.js">
+      </script>
+
+      <script type="text/javascript">
+	$(document).ready(function() { 
+
+	});
+      </script>
+      {% endblock %}
   </head>
 
   <body>
-    TicTacToe goes here
-  </body>
+    {% block header %}
+      <header id="header">
+	<hgroup>
+	  <h1 class="site_title">Let's Play TicTacToe</h1>
+	</hgroup>
+      </header> 
+    {% endblock %}
+
+    <section id="main_section" class="column center">
+      {% block main_body %}            
+	<article id="main_article" class="module width_full">
+	  <section id="main_forms" class="center main_forms">
+	    <ul class="main_tabs">
+	      <li class="main_tab">New Game</li>
+	      <li class="main_tab">
+		Player X
+		<img src="{{STATIC_URL}}TicTacToe/images/person.png"
+		     alt="human" id="player_x_img" />
+	      </li>
+	      <li class="main_tab">
+	      Player O 
+	      <img src="{{STATIC_URL}}TicTacToe/images/computer.png"
+		     alt="computer" id="player_o_img" />
+	      </li>
+	    </ul>
+	    <fieldset id="main_fieldset" class="main_fieldset">
+	      <legend>The Game</legend>
+	      <table id="game_board">
+		<tr>
+		  <td id="square_0" class="square square-top square-left"></td>
+		  <td id="square_1" class="square square-top square-center"></td>
+		  <td id="square_2" class="square square-top square-right"></td>
+		</tr>
+		<tr>
+		  <td id="square_3" class="square square-middle square-left"></td>
+		  <td id="square_4" class="square square-middle square-center"></td>
+		  <td id="square_5" class="square square-middle square-right"></td>
+		</tr>
+		<tr>
+		  <td id="square_6" class="square square-bottom square-left"></td>
+		  <td id="square_7" class="square square-bottom square-center"></td>
+		  <td id="square_8" class="square square-bottom square-right"></td>
+		</tr>
+	      </table>
+
+	    </fieldset>
+	  </section>
+	</article>
+      {% endblock %}
+    </section>
+
+    {% block footer %}
+     <footer>
+      <hr />
+      <p><strong>Copyright &copy; 2011 Website Admin</strong></p>
+    </footer>
+    {% endblock %}
+
+
+   </body>
 </html>
