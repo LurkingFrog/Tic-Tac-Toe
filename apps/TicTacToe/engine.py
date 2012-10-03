@@ -37,6 +37,22 @@ class Moves:
                 .format(board_id, ex.message)
             )
             raise ex
+
+    def is_winner(self, board_id):
+        """
+        This returns if the board contains a winning combination.
+        It returns a list of all the winning moves where an empty list
+        is ok to keep playing
+        """
+
+        try:
+            return self.boards[board_id].winner
+        except Exception as ex:
+            print(
+                "There was an error getting the winners for board id {0}\n{1}"
+                .format(board_id, ex.message)
+            )
+            raise ex
         
     def _add_next_move(self, board_number, remains):
         """
@@ -47,12 +63,6 @@ class Moves:
         """
 
         old_id = str(board_number).zfill(9)[::-1]
-        DEBUG = False
-        if old_id in [
-#            '102211120'
-        ]:
-            DEBUG = True
-
 
         # If this board already exists, skip it
         if board_number > 0 and old_id in self.boards:
@@ -62,8 +72,6 @@ class Moves:
             self.boards[old_id] = Board(old_id)
         
         if self.boards[old_id].winner:
-            if DEBUG:
-                "A winner has already been selected"
             return
 
         turn = 1 if len(remains) % 2 else 2
@@ -85,44 +93,30 @@ class Moves:
             remains[square] = True
 
             if self.boards[new_id].game_over_man == str(turn):
-                if DEBUG:
-                    print "Adding Winning Move: ", turn, square, self.boards[new_id].game_over_man, old_id, new_id
                 winning_moves.append(self.boards[new_id])
 
             elif self.boards[new_id].game_over_man != '0':
-                if DEBUG:
-                    print "Adding Losing Move: ", turn, square, self.boards[new_id].game_over_man, old_id, new_id
                 loss_moves.append(self.boards[new_id])
        
             else:
-                if DEBUG:
-                    print "Adding Draw Move: ", turn, square, self.boards[new_id].game_over_man, old_id, new_id
                 draw_moves.append(self.boards[new_id])
-
-            if DEBUG:
-                print self.boards[new_id]
 
         # Filter next moves down to just quality moves
         if winning_moves:
             self.boards[old_id].next_moves = winning_moves
             self.boards[old_id].game_over_man = str(turn)
-            if DEBUG:
-                print "In winning Moves ", self.boards[old_id].game_over_man
         
         elif draw_moves:
             self.boards[old_id].next_moves = draw_moves
 
         elif loss_moves:
-            if DEBUG:
-                print "In Losing Moves ", self.boards[old_id].game_over_man
             self.boards[old_id].next_moves = loss_moves
             self.boards[old_id].game_over_man = self.boards[old_id].next_moves[0].game_over_man
 
         else:
             pass
 
-        if DEBUG:
-            print "OLD BOARD:\n", self.boards[old_id]
+
 class Board:
     """
 Fields:

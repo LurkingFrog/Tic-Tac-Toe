@@ -1,8 +1,9 @@
 var current_players = {
     "player_x": "person",
-    "player_y": "computer"
+    "player_o": "computer"
 }
 
+var turn = "player_x"
 var current_board = "000000000"
 
 
@@ -13,21 +14,77 @@ var current_board = "000000000"
 function toggle_player(player) {
     var src = $("img#" + player + "_img").attr("src");
 
-    if (current_players[player] == "person") {
-	current_players[player] = "computer";
-	src = src.replace("person", "computer");
+    try {
+	if (current_players[player] == "person") {
+	    current_players[player] = "computer";
+	    src = src.replace("person", "computer");
 	    
-    } else {
-	current_players[player] = "person";
-	src = src.replace("computer", "person");
+	} else {
+	    current_players[player] = "person";
+	    src = src.replace("computer", "person");
+	}
+	
+    } catch(err) {
+//	alert($("img#" + player + "_img").attr("src") + "\n  " + src);
     }
 
     $("img#" + player + "_img").attr("src", src);
+    
+    if (current_players[turn] == "computer") {
+	get_next_move();
+    }
+
 }
 
 // An ajax call to the server to get the next board
 function get_next_move() {
+    $.ajax({
+	url: "/move/" + current_board,
+	dataType: 'json',
+	success: function(data) {
+	    finish_turn(data["new_board"], data["winner"]);
+	}
+    });
+}
 
+
+// For humans clicking 
+function make_move(square_id) {
+    if (current_players[turn] != "person") {
+	alert("Please wait for the computer to finish its turn");
+	return;
+    }
+
+    square = parseInt(square_id.charAt(square_id.length-1));
+    
+    if (current_board.charAt(square) != "0") {
+	alert("That square has already been played");
+	return;
+    }
+	
+    move = (turn=="player_x")? "1" : "2"
+    b = current_board
+    current_board = b.substr(0, square) + move + b.substr(square + 1);
+    
+    $.ajax({
+	url: "/win/" + current_board,
+	dataType: 'json',
+	success: function(data) {
+	    finish_turn(current_board, data["winner"]);
+	}
+    });
+}
+
+
+// a simple helper function to end a turn
+function finish_turn(board, winner) {
+    if (turn=="player_x") {
+	turn = "player_o";
+    } else {
+	turn = "player_x";
+    }
+    draw_board(board, winner); 
+    current_board = board;
 }
 
 
@@ -105,11 +162,16 @@ function draw_board(board_id, winners) {
 	line.width(length);
 	line.show();
     }
+
+    if (current_players[turn] == "computer") {
+	get_next_move();
+    }
 }
 
 
 // Resets the board to all blanks
 function new_board() {
     current_board = "000000000";
+    turn = "player_x"
     draw_board(current_board, []);
 }

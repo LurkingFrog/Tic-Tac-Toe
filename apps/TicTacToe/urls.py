@@ -8,7 +8,8 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 urlpatterns = patterns(
     'TicTacToe.views',
     url(r'^$', 'main', name='main'),
-    url(r'move/(?P<board_id>\d{9})/$', 'ajax_get_move', name='get_move'),
+    url(r'move/(?P<board_id>\d{9})/?$', 'ajax_get_move', name='get_move'),
+    url(r'win/(?P<board_id>\d{9})/?$', 'ajax_check_winner', name='check_winner'),
     
 )
 

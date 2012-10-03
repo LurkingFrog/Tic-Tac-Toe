@@ -27,6 +27,11 @@
 	    $('li#new_game').click(function(e) {
 		new_board();
 	    });
+
+	    $('td[id^="square_"]').click(function(e) {
+		make_move(e.target.id);
+	    });
+
 	});
       </script>
       {% endblock %}

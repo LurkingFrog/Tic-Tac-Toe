@@ -61,6 +61,41 @@ def ajax_get_move(request, board_id):
     )
 
 
+def ajax_check_winner(request, board_id):
+    """
+    This takes in a string in the format of engine.Board.board_id and 
+    returns a json object:
+    {
+       "winner": (winning lines),
+       "error": "error string"
+    }
+
+    winner is a tuple of tuples (see engine.Board.winners)
+    error is only if something blows up
+    """
+
+    response = {
+        'winner': None,
+        'error': None
+    }
+
+    try:
+        moves = cache.get('moves')
+        if moves is None:
+            moves = engine.Moves()
+            cache.set('moves', moves)
+
+        response['winner'] = [x for x in new_board.winner.keys()]
+
+    except Exception as ex:
+        response['error'] = ex.message
+        
+    return HttpResponse(
+        simplejson.dumps(response),
+        mimetype="application/json"
+    )
+
+
 def cache_game(*args, **kwargs):
     """
     Very simple caching of all the possible moves. It's fast enough
