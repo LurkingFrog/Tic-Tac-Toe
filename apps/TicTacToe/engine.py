@@ -1,4 +1,4 @@
-DEBUG = False
+from random import choice
 
 class Moves:
     """
@@ -17,8 +17,20 @@ class Moves:
         self._add_next_move(0, {x: True for x in range(9)})
         print "Loaded {0} different boards".format(len(self.boards))
 
-    def get_next_move(self, board_id):
-        pass
+    def get_next_board(self, board_id):
+        """
+        This returns a board object to play with. From the board,
+        we can determine whether a player has won.
+        """
+
+        try:
+            return choice(self.boards[board_id].next_moves)
+        except Exception as ex:
+            print(
+                "There was an error getting the next move for board id {0}\n{1}"
+                .format(board_id, ex.message)
+            )
+            raise ex
         
     def _add_next_move(self, board_number, remains):
         """
@@ -108,7 +120,7 @@ class Moves:
 class Board:
     """
 The board is an integer, with the position of each digit corresponding to
-a square
+the position the string. See below for the example.
 
  0 | 1 | 2
 -----------
@@ -119,6 +131,25 @@ a square
 blank = 0
 X = 1
 O = 2
+
+example: 102210120
+
+ X |   | O
+-----------
+ O | X |  
+-----------
+ X | O |   
+
+
+Fields:
+  game_over_man - An internal flag that says if no mistakes are made the stated
+     player will win.
+
+  winner - This is a dictionary of all the winning lines and the player who won
+
+  next_moves - This is a list of all the potential best moves that should lead
+     to a win or a draw so long as a mistake isn't made by a human player.
+
     """
 
     # These are the prearranged winning positions
@@ -190,7 +221,7 @@ if __name__ == "__main__":
     ]
 
     print("\nWinning Game\n")
-    for board in reversed(winning_test_game):
+    for board in winning_test_game:
         print(game.boards[board])
 
     draw_test_game = [
@@ -206,5 +237,5 @@ if __name__ == "__main__":
     ]
 
     print("\nDraw Game\n")
-    for board in reversed(draw_test_game):
+    for board in draw_test_game:
         print(game.boards[board])
