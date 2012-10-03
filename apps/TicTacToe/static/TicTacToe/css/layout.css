@@ -1,12 +1,11 @@
 
 #main_section {
-    width: 700px;
+    width: 620px;
 }
 
 #game_board{
-    margin-left: auto;
-    margin-right: auto;
 }
+
 header.main_header {
     display: block;
 }
@@ -76,10 +75,14 @@ li img {
 }
 
 td.square {
-    height: 100px;
-    width: 100px;
+    height: 130px;
+    width: 130px;
     padding: 0px;
     vertical-align: middle;
+}
+
+td.square img {
+    display: block;
     margin-left: auto;
     margin-right: auto;
 }
@@ -108,4 +111,10 @@ td.square-center {
     
 td.square-right {
     border-left: 3px solid #000000;
+}
+
+div.winning_line {
+    height: 5px;
+    background: #000000;
+    display: None;
 }

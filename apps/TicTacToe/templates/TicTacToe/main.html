@@ -22,7 +22,11 @@
 	$(document).ready(function() {
 	    $('li[id^="player"]').click(function(e) {
 		toggle_player(e.target.id);
-	    })
+	    });
+
+	    $('li#new_game').click(function(e) {
+		new_board();
+	    });
 	});
       </script>
       {% endblock %}
@@ -56,21 +60,41 @@
 	    </ul>
 	    <fieldset id="main_fieldset" class="main_fieldset">
 	      <legend>The Game</legend>
+	      <div id="winning_line_0" class="winning_line"></div>
+	      <div id="winning_line_1" class="winning_line"></div>
 	      <table id="game_board">
 		<tr>
-		  <td id="square_0" class="square square-top square-left"></td>
-		  <td id="square_1" class="square square-top square-center"></td>
-		  <td id="square_2" class="square square-top square-right"></td>
+		  <td id="square_0" class="square square-top square-left">
+		    <img src="{{STATIC_URL}}TicTacToe/images/blank.gif">
+		  </td>
+		  <td id="square_1" class="square square-top square-center">
+		    <img src="{{STATIC_URL}}TicTacToe/images/blank.gif">
+		  </td>
+		  <td id="square_2" class="square square-top square-right">
+		    <img src="{{STATIC_URL}}TicTacToe/images/blank.gif">
+		  </td>
 		</tr>
 		<tr>
-		  <td id="square_3" class="square square-middle square-left"></td>
-		  <td id="square_4" class="square square-middle square-center"></td>
-		  <td id="square_5" class="square square-middle square-right"></td>
+		  <td id="square_3" class="square square-middle square-left">
+		    <img src="{{STATIC_URL}}TicTacToe/images/blank.gif">
+		  </td>
+		  <td id="square_4" class="square square-middle square-center">
+		    <img src="{{STATIC_URL}}TicTacToe/images/blank.gif">
+		  </td>
+		  <td id="square_5" class="square square-middle square-right">
+		    <img src="{{STATIC_URL}}TicTacToe/images/blank.gif">
+		  </td>
 		</tr>
 		<tr>
-		  <td id="square_6" class="square square-bottom square-left"></td>
-		  <td id="square_7" class="square square-bottom square-center"></td>
-		  <td id="square_8" class="square square-bottom square-right"></td>
+		  <td id="square_6" class="square square-bottom square-left">
+		    <img src="{{STATIC_URL}}TicTacToe/images/blank.gif">
+		  </td>
+		  <td id="square_7" class="square square-bottom square-center">
+		    <img src="{{STATIC_URL}}TicTacToe/images/blank.gif">
+		  </td>
+		  <td id="square_8" class="square square-bottom square-right">
+		    <img src="{{STATIC_URL}}TicTacToe/images/blank.gif">
+		  </td>
 		</tr>
 	      </table>
 
